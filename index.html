@@ -17,35 +17,28 @@
        🔧 REMPLACE CES VALEURS PAR TA CONFIG FIREBASE
        → console.firebase.google.com > Ton projet >
          Paramètres > Tes applications > SDK Firebase
-    ═══════════════════════════════════════════════════ */
-    const firebaseConfig = {
-      apiKey:            "REMPLACE_PAR_TON_API_KEY",
-      authDomain:        "REMPLACE.firebaseapp.com",
-      projectId:         "REMPLACE_PAR_TON_PROJECT_ID",
-      storageBucket:     "REMPLACE.appspot.com",
-      messagingSenderId: "REMPLACE",
-      appId:             "REMPLACE_PAR_TON_APP_ID"
-    };
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-    const TARGET_URL     = 'https://www.serrure-metal-art.fr/';
-    const REDIRECT_DELAY = 2000;
-    const DOC_PATH       = 'tracker/scans';
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAd6KYaOGQFb6YSLlKfzSAABF7mSTk5Hw4",
+  authDomain: "serrure-metal-art.firebaseapp.com",
+  databaseURL: "https://serrure-metal-art-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "serrure-metal-art",
+  storageBucket: "serrure-metal-art.firebasestorage.app",
+  messagingSenderId: "909348340368",
+  appId: "1:909348340368:web:5184adfd49012cfdf30e15",
+  measurementId: "G-TWS33WNLK2"
+};
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
-    const ref = doc(db, DOC_PATH);
-
-    /* ── Helpers stats ─────────────────────────────── */
-    function getStats(scans) {
-      const now   = Date.now();
-      const DAY   = 86400000;
-      const today = new Date().toDateString();
-      return {
-        total : scans.length,
-        today : scans.filter(s => new Date(s.ts).toDateString() === today).length,
-        week  : scans.filter(s => now - s.ts < 7 * DAY).length,
-      };
-    }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
     /* ── Render UI ─────────────────────────────────── */
     function render(scans) {
